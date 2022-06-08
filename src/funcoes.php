@@ -15,7 +15,7 @@ class Funcoes
 
      * */
     public function SeculoAno(int $ano): int {
-        
+        return ceil($ano/100);
     }
 
     
@@ -37,7 +37,27 @@ class Funcoes
 
      * */
     public function PrimoAnterior(int $numero): int {
+        $i = $numero - 1;
+        for($i; $i >= 2; $i--)
+        {
+            if($this->ChecaPrimo($i))
+            {
+                return $i;
+            }
+        }
+    }
+
+    public function ChecaPrimo(int $numero): bool {
         
+        for ($i = 2; $i <= $numero/2; $i++)
+        {
+           if ($numero % $i == 0)
+           {
+               return false;
+           }
+        }
+
+        return true;
     }
 
 
@@ -66,7 +86,27 @@ class Funcoes
 
      * */
     public function SegundoMaior(array $arr): int {
-        
+
+        $maior = 0;
+        $segundoMaior = 0;
+
+        foreach($arr as $array)
+        {
+            foreach($array as $number)
+            {
+                if($number >= $maior)
+                {
+                    $segundoMaior = $maior;
+                    $maior = $number;
+                }
+                else if($number > $segundoMaior)
+                {
+                    $segundoMaior = $number;
+                }
+            }
+        }
+
+        return $segundoMaior;
     }
 	
 	
@@ -106,7 +146,32 @@ class Funcoes
 
      * */
     
-	public function SequenciaCrescente(array $arr): boolean {
-        
+	public function SequenciaCrescente(array $arr): bool {
+
+        foreach($arr as $key => $number)
+        {
+            $tempArray = $arr;
+
+            unset($tempArray[$key]);
+            $tempArray = array_values($tempArray);
+
+            $errors = 0;
+
+            foreach($tempArray as $tempKey => $tempNumber)
+            {
+                if(!isset($tempArray[$tempKey+1])) { break; }
+
+                if($tempNumber >= $tempArray[$tempKey+1])
+                {
+                    $errors++;
+                }
+            }
+
+            if($errors == 0)
+            {
+                return true;
+            }
+        }
+            return false;
     }
 }
